@@ -17,6 +17,7 @@ class CompaniesController < ApplicationController
     if @company.save
       redirect_to companies_path, notice: "Saved"
     else
+      flash.now[:error] = @company.errors.full_messages.to_s
       render :new
     end
   end
@@ -31,6 +32,14 @@ class CompaniesController < ApplicationController
       render :edit
     end
   end  
+
+  def destroy
+    if @company.destroy
+      redirect_to companies_path, alert: "Company deleted!"
+    else
+      render :show
+    end
+  end
 
   private
 
